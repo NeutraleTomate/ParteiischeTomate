@@ -4,7 +4,6 @@ import datetime
 from datetime import timedelta
 from time import sleep
 from keepAlive import keep_alive
-#from skills import weeklypoll, sendInput
 client = discord.Client()
 
 positive = "👍"
@@ -206,21 +205,6 @@ async def on_message(message):
        
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-  #weeklypoll(raidCombList, positive, negative, maybe)    
-  #sendInput()
 
 
 keep_alive()
