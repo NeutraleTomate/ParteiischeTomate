@@ -168,7 +168,7 @@ async def on_message(message):
       day = date.strftime("%d")
       month = date.strftime("%m")
       #year = date.strftime("%Y")
-      dateToPrint = day + "." + month #+ "." + year
+      dateToPrint = day + "." + month + "." #+ year
       await message.channel.send(raidDay + " " + dateToPrint + " " +raidTime)
       
 
