@@ -38,6 +38,31 @@ wishEffects = [
 
 ]
 
+def log(text):
+  with open("log.csv", "w") as file:
+    file.write(text + "\n")
+
+def logGeneral():
+  with open("log.csv", "w") as file:
+    file.write(messge.author.name + ";" + now + "\n")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @client.event
 async def on_ready():
@@ -65,7 +90,7 @@ async def on_message(message):
         for day in raidCombList:
 
             if (message.content.split(" "))[0] == day.split(";")[0]:
-                print(True)
+                
                 await message.add_reaction(positive)
                 await message.add_reaction(negative)
                 await message.add_reaction(maybe)
@@ -78,7 +103,7 @@ async def on_message(message):
         await message.channel.send("Shattered Throne: 1st Encounter map:")
         await message.channel.send(file=discord.File("guides/throne.png"))
 
-    if "!heresy" or "!pit" in message.content:
+    if "!heresy" in message.content or "!pit" in message.content:
         await message.delete()
         await message.channel.send("Pit of Heresy: 4th Encounter map:")
         await message.channel.send(file=discord.File("guides/heresy.png"))
@@ -120,7 +145,7 @@ async def on_message(message):
         await message.channel.send("Robin hat Recht!")
 
     if "!xxtime" in message.content:
-        print(message.author.name + " used !xxtime at " + now)
+        log(message.author.name + " used !xxtime at " + now)
         await message.delete()
         xxtime = (datetime.datetime.now()).strftime("%c")
         for i in range(1, 60):
@@ -132,7 +157,7 @@ async def on_message(message):
 
     if "!weeklypoll" in message.content or "!wp" in message.content:
         await message.delete()
-        print(message.author.name + " used !wp at " + now)
+        log(message.author.name + " used !wp at " + now)
 
         addent = int((datetime.datetime.now()).strftime("%w"))
         addent += -2
@@ -160,18 +185,18 @@ async def on_message(message):
         text = message.content
         text = text.replace("!send", "")
 
-        print(message.author.name + " used !send at " + now + " with " + text)
+        log(message.author.name + " used !send at " + now + " with " + text)
         await message.channel.send(text)
         await message.delete()
 
     if "!nein" in message.content:
         await message.delete()
-        print(message.author.name + " used !nein at " + now)
-        for i in range(10):
+        log(message.author.name + " used !nein at " + now)
+        for i in range(5):
             await message.channel.send("**NEIN**")
 
     if "!clear" in message.content:
-        print(message.author.name + " used !clear at " + now)
+        log(message.author.name + " used !clear at " + now)
         args = message.content.split(" ")
         if len(args) == 2 and args[1].isdigit():
             limit = int(args[1]) + 1
