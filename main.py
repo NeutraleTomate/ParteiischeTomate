@@ -1,4 +1,4 @@
-import discord#pls wörk
+import discord  # pls wörk
 import os
 import datetime
 from datetime import timedelta
@@ -38,30 +38,15 @@ wishEffects = [
 
 ]
 
+
 def log(text):
-  with open("log.csv", "w") as file:
-    file.write(text + "\n")
+    with open("log.csv", "w") as file:
+        file.write(text + "\n")
+
 
 def logGeneral():
-  with open("log.csv", "w") as file:
-    file.write(messge.author.name + ";" + now + "\n")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    with open("log.csv", "w") as file:
+        file.write(messge.author.name + ";" + now + "\n")
 
 
 @client.event
@@ -90,7 +75,6 @@ async def on_message(message):
         for day in raidCombList:
 
             if (message.content.split(" "))[0] == day.split(";")[0]:
-                
                 await message.add_reaction(positive)
                 await message.add_reaction(negative)
                 await message.add_reaction(maybe)
