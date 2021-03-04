@@ -41,7 +41,7 @@ wishEffects = [
 
 
 def log(text):
-    with open("log.csv", "w") as file:
+    with open("log.csv", "a") as file:
         file.write(text + "\n")
 
 
@@ -62,7 +62,7 @@ async def on_ready():
 @client.event
 async def on_message(message):
     def loggeneral():
-        with open("log.csv", "w") as file:
+        with open("log.csv", "a") as file:
             file.write(message.author.name + ";" + now + ";" + message.content + "\n")
     if False:
         await message.channel.send("Robin hat Recht!")
