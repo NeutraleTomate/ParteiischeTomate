@@ -18,7 +18,8 @@ raidCombList = ["Dienstag;20:00;2",
                 "Samstag;20:00;6",
                 "Sonntag;15:00;0",
                 "Sonntag;20:00;0",
-                "Montag;20:00;1"]  # liste von Raidterminen: [Wochentag;Uhrzeit;Wochentag als Zahl(Sonntag = 0, Samstag = 6)]
+                "Montag;20:00;1"]
+                # liste von Raidterminen: [Wochentag;Uhrzeit;Wochentag als Zahl(Sonntag = 0, Samstag = 6)]
 
 wishEffects = [
     "grants an Ethereal Key.",
@@ -44,9 +45,7 @@ def log(text):
         file.write(text + "\n")
 
 
-def logGeneral():
-    with open("log.csv", "w") as file:
-        file.write(messge.author.name + ";" + now + "\n")
+
 
 
 @client.event
@@ -62,6 +61,9 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    def loggeneral():
+        with open("log.csv", "w") as file:
+            file.write(message.author.name + ";" + now + ";" + message.content + "\n")
     if False:
         await message.channel.send("Robin hat Recht!")
 
@@ -83,16 +85,19 @@ async def on_message(message):
         return
 
     if "!throne" in message.content:
+        loggeneral()
         await message.delete()
         await message.channel.send("Shattered Throne: 1st Encounter map:")
         await message.channel.send(file=discord.File("guides/throne.png"))
 
     if "!heresy" in message.content or "!pit" in message.content:
+        loggeneral()
         await message.delete()
         await message.channel.send("Pit of Heresy: 4th Encounter map:")
         await message.channel.send(file=discord.File("guides/heresy.png"))
 
     if "!wish" in message.content:
+        loggeneral()
         await message.delete()
         number = message.content.split("!wish ")[1]
         if number == "all":
@@ -107,6 +112,7 @@ async def on_message(message):
             await message.channel.send(file=discord.File("guides/wishes/wish-" + number + ".jpg"))
 
     if "!dsc" in message.content:
+        loggeneral()
         await message.delete()
         number = message.content.split("!dsc ")[1]
         if number == 1 or 3:
@@ -114,6 +120,7 @@ async def on_message(message):
             await message.channel.send(file=discord.File("guides/DSC/crypta_map_0" + number + ".png"))
 
     if "!helöp" in message.content:
+        loggeneral()
         await message.delete()
         await message.channel.send("Available Commands: \n\
       `!throne`: Shattered Throne 1st Encounter map \n\
@@ -126,10 +133,12 @@ async def on_message(message):
                                    )
 
     if "!wahrheit" in message.content:
+        loggeneral()
         await message.channel.send("Robin hat Recht!")
 
     if "!xxtime" in message.content:
-        log(message.author.name + " used !xxtime at " + now)
+        loggeneral()
+        #log(message.author.name + " used !xxtime at " + now)
         await message.delete()
         xxtime = (datetime.datetime.now()).strftime("%c")
         for i in range(1, 60):
@@ -141,7 +150,8 @@ async def on_message(message):
 
     if "!weeklypoll" in message.content or "!wp" in message.content:
         await message.delete()
-        log(message.author.name + " used !wp at " + now)
+        loggeneral()
+        #log(message.author.name + " used !wp at " + now)
 
         addent = int((datetime.datetime.now()).strftime("%w"))
         addent += -2
@@ -169,18 +179,21 @@ async def on_message(message):
         text = message.content
         text = text.replace("!send", "")
 
-        log(message.author.name + " used !send at " + now + " with " + text)
+        loggeneral()
+        #log(message.author.name + " used !send at " + now + " with " + text)
         await message.channel.send(text)
         await message.delete()
 
     if "!nein" in message.content:
         await message.delete()
-        log(message.author.name + " used !nein at " + now)
+        loggeneral()
+        #log(message.author.name + " used !nein at " + now)
         for i in range(5):
             await message.channel.send("**NEIN**")
 
     if "!clear" in message.content:
-        log(message.author.name + " used !clear at " + now)
+        loggeneral()
+        #log(message.author.name + " used !clear at " + now)
         args = message.content.split(" ")
         if len(args) == 2 and args[1].isdigit():
             limit = int(args[1]) + 1
