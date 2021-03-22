@@ -1,3 +1,4 @@
+from discord.utils import get
 import discord  # pls wörk
 import os
 import datetime
@@ -7,7 +8,8 @@ from keepAlive import keep_alive
 
 client = discord.Client()
 
-positive = "👍"
+customEmoji1 = "eis"
+positive = "👍" 
 negative = "👎"
 maybe = "🤷"
 raidCombList = ["Dienstag;20:00;2",
@@ -59,6 +61,9 @@ async def on_ready():
     print('{0.user} is online at '.format(client) + now)
 
 
+
+
+
 @client.event
 async def on_message(message):
     def loggeneral():
@@ -77,10 +82,17 @@ async def on_message(message):
         for day in raidCombList:
 
             if (message.content.split(" "))[0] == day.split(";")[0]:
+                await message.add_reaction(discord.utils.get(client.emojis, name=customEmoji1))
                 await message.add_reaction(positive)
                 await message.add_reaction(negative)
                 await message.add_reaction(maybe)
 
+    
+    
+    
+    
+    
+    
     if message.author == client.user:
         return
 
@@ -148,7 +160,8 @@ async def on_message(message):
             else:
                 sleep(0.49)
 
-    if "!weeklypoll" in message.content or "!wp" in message.content:
+
+    async def wp():
         await message.delete()
         loggeneral()
         #log(message.author.name + " used !wp at " + now)
@@ -165,8 +178,7 @@ async def on_message(message):
             raidDay = raidComb[0]
             raidTime = raidComb[1]
 
-            if date.strftime("%w") != raidComb[
-                2]:  # verhindert das bei wiederholung von wochentagen das datum erhöht wird
+            if date.strftime("%w") != raidComb[2]:  # verhindert das bei wiederholung von wochentagen das datum erhöht wird
                 date = date + timedelta(days=1)
 
             day = date.strftime("%d")
@@ -174,6 +186,14 @@ async def on_message(message):
             # year = date.strftime("%Y")
             dateToPrint = day + "." + month + "."  # + year
             await message.channel.send(raidDay + " " + dateToPrint + " " + raidTime)
+
+      
+
+    if "!weeklypoll" in message.content or "!wp" in message.content:
+      loggeneral()
+      await wp()
+
+     
 
     if "!send" in message.content:
         text = message.content
