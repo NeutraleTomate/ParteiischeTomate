@@ -29,20 +29,22 @@ pEmoji3 = "🟨"
 pEmoji4 = "🟥"
 pEmojiX = "✅"
 
+
+pX = "Ich möchte einfach raiden - egal was(Wenn diese Oprion ausgewählt wird bitte nichts anderes auswählen)"
+
 pExplain = "**Erklärung für Prioritäts-Abstimmung:**\n\
             `" + pEmoji1 + "` Ich möchte, weil ich noch was brauch\n\
             `" + pEmoji2 + "` Ich möchte, weil ich bock hab, lasse aber anderen, die noch was brauchen, den Vortritt\n\
             `" + pEmoji3 + "` Ich mach mit wenn jemand fehlt\n\
             `" + pEmoji4 + "` Ich möchte auf gar keinen fall\n\
-            `" + pEmojiX + "` mir is alles egal ich will einfach irgendwas raiden"
+            `" + pEmojiX + "`" + pX 
 
-pRaidList = ["Deep Stone Crypt"
-             "Garden of Salvation"
-             "Last Wish"
-             "Last Wish - only Riven(3x)"
-             "Ich möchte einfach raiden - egal was"
+pRaidList = ["Deep Stone Crypt",
+             "Garden of Salvation",
+             "Last Wish",
+             "Last Wish - only Riven(3x)",
              ]
-pX = "mir is alles egal ich will einfach irgendwas raiden"
+
 
 wishEffects = [
     "grants an Ethereal Key.",
@@ -119,10 +121,10 @@ async def on_message(message):
             await message.channel.send(raidDay + " " + dateToPrint + " " + raidTime)
 
     async def wpraids():
-        await message.delete()
         await message.channel.send(pExplain)
         for raid in pRaidList:
             await message.channel.send(raid)
+        await message.channel.send(pX)
 
 
     # time Setup
@@ -146,7 +148,6 @@ async def on_message(message):
     # Reactions RaidPriority
     if message.author == client.user:
         for raidName in pRaidList:
-
             if message.content == raidName:
                 await message.add_reaction(pEmoji1)
                 await message.add_reaction(pEmoji2)
@@ -214,13 +215,14 @@ async def on_message(message):
             else:
                 sleep(0.49)
 
-    if "!wp" in message.content:
+    if "!wp" == message.content:
         loggeneral()
         await wp()
 
-    if "!wpx" in message.content:
+    if "!wpx" == message.content:
         loggeneral()
         await wp()
+        await message.channel.send("---")
         await wpraids()
 
     if "!send" in message.content:
