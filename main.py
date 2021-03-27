@@ -22,21 +22,22 @@ raidCombList = ["Dienstag;20:00;2",
                 "Sonntag;20:00;0",
                 "Montag;20:00;1"
                 ]  # liste von Raidterminen: [Wochentag;Uhrzeit;Wochentag als Zahl(Sonntag = 0, Samstag = 6)]
-
-pEmoji1 = "🟦"
-pEmoji2 = "🟩"
-pEmoji3 = "🟨"
-pEmoji4 = "🟥"
+pEmoji1 = "⚠️"
+pEmoji2 = "🟦"
+pEmoji3 = "🟩"
+pEmoji4 = "🟨"
+pEmoji5 = "🚫"
 pEmojiX = "✅"
 
 
 pX = "Ich möchte einfach raiden - egal was(Wenn diese Oprion ausgewählt wird bitte nichts anderes auswählen)"
 
 pExplain = "**Erklärung für Prioritäts-Abstimmung:**\n\
-            `" + pEmoji1 + "` Ich möchte, weil ich noch was brauch\n\
-            `" + pEmoji2 + "` Ich möchte, weil ich bock hab, lasse aber anderen, die noch was brauchen, den Vortritt\n\
-            `" + pEmoji3 + "` Ich mach mit wenn jemand fehlt\n\
-            `" + pEmoji4 + "` Ich möchte auf gar keinen fall\n\
+            `" + pEmoji1 + "` Ich möchte, weil ich noch ein Exo brauch\n\
+            `" + pEmoji2 + "` Ich möchte, weil ich noch RÜstung/Waffen brauch\n\
+            `" + pEmoji3 + "` Ich möchte, weil ich bock hab, lasse aber anderen, die noch was brauchen, den Vortritt\n\
+            `" + pEmoji4 + "` Ich mach mit wenn jemand fehlt\n\
+            `" + pEmoji5 + "` Ich möchte auf gar keinen fall\n\
             `" + pEmojiX + "`" + pX 
 
 pRaidList = ["Deep Stone Crypt",
@@ -153,6 +154,7 @@ async def on_message(message):
                 await message.add_reaction(pEmoji2)
                 await message.add_reaction(pEmoji3)
                 await message.add_reaction(pEmoji4)
+                await message.add_reaction(pEmoji5)
 
         if message.content == pX:
             await message.add_reaction(pEmojiX)
