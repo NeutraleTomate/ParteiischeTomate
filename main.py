@@ -26,19 +26,19 @@ pEmoji1 = "⚠️"
 pEmoji2 = "🟦"
 pEmoji3 = "🟩"
 pEmoji4 = "🟨"
-pEmoji5 = "🚫"
+pEmoji5 = "🟥"
 pEmojiX = "✅"
 
 
-pX = "Ich möchte einfach raiden - egal was(Wenn diese Oprion ausgewählt wird bitte nichts anderes auswählen)"
+pX = "Ich möchte einfach raiden - egal was(Wenn diese Option ausgewählt wird bitte nichts anderes auswählen)"
 
 pExplain = "**Erklärung für Prioritäts-Abstimmung:**\n\
-            `" + pEmoji1 + "` Ich möchte, weil ich noch ein Exo brauch\n\
-            `" + pEmoji2 + "` Ich möchte, weil ich noch RÜstung/Waffen brauch\n\
-            `" + pEmoji3 + "` Ich möchte, weil ich bock hab, lasse aber anderen, die noch was brauchen, den Vortritt\n\
-            `" + pEmoji4 + "` Ich mach mit wenn jemand fehlt\n\
-            `" + pEmoji5 + "` Ich möchte auf gar keinen fall\n\
-            `" + pEmojiX + "`" + pX 
+            " + pEmoji1 + " Ich möchte, weil ich noch ein Exo brauch\n\
+            " + pEmoji2 + " Ich möchte, weil ich noch Rüstung/Waffen brauch\n\
+            " + pEmoji3 + " Ich möchte, weil ich bock hab\n\
+            " + pEmoji4 + " Ich mach mit wenn jemand fehlt\n\
+            " + pEmoji5 + " Ich möchte auf gar keinen fall\n\
+            " + pEmojiX + "" + pX 
 
 pRaidList = ["Deep Stone Crypt",
              "Garden of Salvation",
