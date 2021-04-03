@@ -189,6 +189,13 @@ async def on_message(message):
             await message.channel.send(number + ". Wish: " + wishEffects[int(number) - 1])
             await message.channel.send(file=discord.File("guides/wishes/wish-" + number + ".jpg"))
 
+    if"!riven" in message.content:
+      loggeneral()
+      await message.delete()
+      number = 7
+      await message.channel.send(number + ". Wish: " + wishEffects[int(number) - 1])
+      await message.channel.send(file=discord.File("guides/wishes/wish-" + number + ".jpg"))
+
     if "!dsc" in message.content:
         loggeneral()
         await message.delete()
