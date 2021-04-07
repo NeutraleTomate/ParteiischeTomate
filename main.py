@@ -4,13 +4,20 @@ import datetime
 from datetime import timedelta
 from time import sleep
 from keepAlive import keep_alive
+from loremipsum import get_sentences
 
-client = discord.Client()
+
+
+
+
 
 customEmoji1 = "eis"
 positive = "👍"
 negative = "👎"
 maybe = "🤷"
+
+
+client = discord.Client()
 
 raidCombList = ["Dienstag;20:00;2",
                 "Mittwoch;20:00;3",
@@ -64,18 +71,33 @@ wishEffects = [
     "spawns Corruptes eggs."
 
 ]
-helopText = "Available Commands: \n\
-      `!throne`: Shattered Throne 1st Encounter map \n\
-      `!heresy`: Pit of Heresy 4th Encounter map \n\
-      `!dsc 1`: DSC 1st Encounter map \n\
+helopText = "**Available Commands:**\n\
+      `!throne`: Shattered Throne 1st Encounter map\n\
+      `!heresy` or `!pit`: Pit of Heresy 4th Encounter map\n\
+      `!dsc 1`: DSC 1st Encounter map\n\
       `!dsc 3`: DSC 3rd Encounter map\n\
+      `!dsc loot`: DSC LootTable\n\
+      `!gos 2`: GoS 2nd Encounter map\n\
+      `!gos 3`: GoS 3rd Encounter Eyes\n\
+      `!gos loot`: GoS LootTablen\n\
+      `!LW vault`: LW Vault Symbols\n\
       `!wish all`: Overview over all Wishes \n\
       `!wish` + number(1-14): shows the selected wish\n\
       `!wahrheit`: Beschert dir die Erleuchtung nach der du dein Leben lang gesucht hast! "
 
+#genderTable
+#!xxtime
+#!clear
+#!write
+#!send
+#!nein
+
+
 """def log(text):
     with open("log.csv", "a") as file:
         file.write(text + "\n")"""
+
+
 
 
 @client.event
@@ -168,13 +190,13 @@ async def on_message(message):
         loggeneral()
         await message.delete()
         await message.channel.send("Shattered Throne: 1st Encounter map:")
-        await message.channel.send(file=discord.File("guides/throne.png"))
+        await message.channel.send(file=discord.File("guides/Dungeons/throne.png"))
 
     if "!heresy" in message.content or "!pit" in message.content:
         loggeneral()
         await message.delete()
         await message.channel.send("Pit of Heresy: 4th Encounter map:")
-        await message.channel.send(file=discord.File("guides/heresy.png"))
+        await message.channel.send(file=discord.File("guides/Dungeons/heresy.png"))
 
     if "!wish" in message.content:
         loggeneral()
@@ -187,22 +209,55 @@ async def on_message(message):
                 await message.channel.send(str(i) + ". Wish: " + effect)
         else:
             await message.channel.send(number + ". Wish: " + wishEffects[int(number) - 1])
-            await message.channel.send(file=discord.File("guides/wishes/wish-" + number + ".jpg"))
+            await message.channel.send(file=discord.File("guides/Raids/LW/wishes/wish-" + number + ".jpg"))
 
     if"!riven" in message.content:
       loggeneral()
       await message.delete()
-      number = 7
+      number = "7"
       await message.channel.send(number + ". Wish: " + wishEffects[int(number) - 1])
-      await message.channel.send(file=discord.File("guides/wishes/wish-" + number + ".jpg"))
+      await message.channel.send(file=discord.File("guides/Raids/LW/wishes/wish-" + number + ".jpg"))
+
+
+    if "!LW vault" in message.content:
+      loggeneral()
+      await message.delete()
+      await message.channel.send("LW Vault Symbols:")
+      await message.channel.send(file=discord.File("guides/Raids/LW/LW_vault_symbols.png"))
+
+
 
     if "!dsc" in message.content:
         loggeneral()
         await message.delete()
-        number = message.content.split("!dsc ")[1]
-        if number == 1 or 3:
+        try:
+          number = message.content.split("!dsc ")[1]
+        except:
+          await message.channel.send("Please enter a Number or word behind `!dsc`")
+        if number == "1" or number == "3":
             await message.channel.send("DSC " + number + ". Encounter map: ")
-            await message.channel.send(file=discord.File("guides/DSC/crypta_map_0" + number + ".png"))
+            await message.channel.send(file=discord.File("guides/Raids/DSC/crypta_map_0" + number + ".png"))
+        elif number == "loot" or number == "Loot":
+          await message.channel.send("DSC Loot Table:")
+          await message.channel.send(file=discord.File("guides/Raids/DSC/dsc_loottable.png"))
+
+
+    if "!gos" in message.content:
+        loggeneral()
+        await message.delete()
+        try:
+          number = message.content.split("!gos ")[1]
+        except:
+          await message.channel.send("Please enter a Number or word behind `!gos`")
+        if number == "2" or number == "3":
+            await message.channel.send("GoS " + number + ". Encounter: ")
+            await message.channel.send(file=discord.File("guides/Raids/GOS/gos_" + number + ".png"))
+        elif number == "loot" or number == "Loot":
+          await message.channel.send("GoS Loot Table:")
+          await message.channel.send(file=discord.File("guides/Raids/GOS/gos_loottable.png"))      
+
+
+ 
 
     if "!helöp" in message.content:
         loggeneral()
@@ -261,6 +316,24 @@ async def on_message(message):
             await message.channel.send("You got me there xD")
         else:
             await message.channel.send("`!clear x` clears x messages. \n Your command doesn't fit this pattern!")
+
+    if "!genderTable" in message.content:
+      await message.delete()
+      await message.channel.send("Bitte wählen Sie:in Ihr:in Geschlecht:in!")
+      await message.channel.send(file=discord.File("guides/genderTable.jpg"))
+    
+    if "!write" in message.content:
+      await message.delete()
+      try:
+        number =  int(message.content.split("!write ")[1])
+      except:
+        number = 3      
+      sentences_list = get_sentences(number)
+      for sentence in sentences_list:
+        sentence = sentence.replace("B'", "")
+        sentence = sentence.replace("b'", "")
+        sentence = sentence.replace("'", "")
+        await message.channel.send(sentence)
 
 
 keep_alive()
