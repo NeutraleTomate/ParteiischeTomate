@@ -16,9 +16,9 @@ commands = {
     "genderTable": genderTable,
     "write": write,
     # emotions
-    ":(": sad,
-    ":frowning:": sad,
-    "😦": sad,
+    #":(": sad,
+    #":frowning:": sad,
+    #"😦": sad,
     # ":)": happy(message),  # x
 
     # Destiny commands

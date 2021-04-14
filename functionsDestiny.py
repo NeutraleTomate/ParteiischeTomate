@@ -1,8 +1,11 @@
 import discord
 import datetime
 from datetime import timedelta
-from vardata import *
+from vardata import*
 
+
+async def vaildNum(message, command):
+  await message.channel.send("Please enter a valid Number or word behind `{}`".format(command))
 
 async def wp(message):
     await message.delete()
@@ -56,47 +59,63 @@ async def pit(message):
 
 
 async def dsc(message):
-    await message.delete()
     try:
         number = message.content.split("!dsc ")[1]
     except:
-        await message.channel.send("Please enter a Number or word behind `!dsc`")
+        await vaildNum(message,"!dsc")
+        return
     if number == "1" or number == "3":
         await message.channel.send("DSC " + number + ". Encounter map: ")
         await message.channel.send(file=discord.File("guides/Raids/DSC/crypta_map_0" + number + ".png"))
+        await message.delete()
     elif number == "loot" or number == "Loot":
         await message.channel.send("DSC Loot Table:")
         await message.channel.send(file=discord.File("guides/Raids/DSC/dsc_loottable.png"))
+        await message.delete()
+    else:
+      await vaildNum(message,"!dsc")
 
 
 async def gos(message):
-    await message.delete()
     try:
         number = message.content.split("!gos ")[1]
     except:
-        await message.channel.send("Please enter a Number or word behind `!gos`")
+        await vaildNum("message,!gos")
+        return
     if number == "2" or number == "3":
         await message.channel.send("GoS " + number + ". Encounter: ")
         await message.channel.send(file=discord.File("guides/Raids/GOS/gos_" + number + ".png"))
+        await message.delete()
     elif number == "loot" or number == "Loot":
         await message.channel.send("GoS Loot Table:")
         await message.channel.send(file=discord.File("guides/Raids/GOS/gos_loottable.png"))
+        await message.delete()
+    else:
+      await vaildNum(message,"!gos")
 
 
 async def wish(message):
-    await message.delete()
+    
     try:
         number = message.content.split("!wish ")[1]
     except:
-        await message.channel.send("Please enter a Number or word behind `!wish`")
+        await vaildNum(message,"!wish")
+        return
     if number == "all":
         i = 0
         for effect in wishEffects:
             i = i + 1
             await message.channel.send(str(i) + ". Wish: " + effect)
+            await message.delete()
+    elif number.isdigit():
+        if int(number) >= 1 and int(number) <= 14:
+            await message.channel.send(number + ". Wish: " + wishEffects[int(number) - 1])
+            await message.channel.send(file=discord.File("guides/Raids/LW/wishes/wish-" + number + ".jpg"))
+            await message.delete()
+        else:
+            await vaildNum(message,"!wish")
     else:
-        await message.channel.send(number + ". Wish: " + wishEffects[int(number) - 1])
-        await message.channel.send(file=discord.File("guides/Raids/LW/wishes/wish-" + number + ".jpg"))
+        await vaildNum(message,"!wish")
 
 
 async def vault(message):

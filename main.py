@@ -81,13 +81,15 @@ async def on_message(message):
         return
 
     if message.content.startswith(prefix):
-        loggeneral(message)
+        await loggeneral(message)
+        
         if message.content.replace(prefix, "") in exactCommands:
-            exactCommands[message.content.replace(prefix, "")](message)
+            await exactCommands[message.content.replace(prefix, "")](message)
+        
         else:
             for item in commands:
-                if item in message:
-                    commands[item](message)
+                if item in message.content:
+                    await commands[item](message)
 
 
 
