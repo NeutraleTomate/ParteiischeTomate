@@ -19,6 +19,8 @@ maybe = "🤷"
 
 client = discord.Client()
 
+
+
 raidCombList = ["Dienstag;20:00;2",
                 "Mittwoch;20:00;3",
                 "Donnerstag;20:00;4",
@@ -107,13 +109,25 @@ async def on_ready():
     nowYear = (datetime.datetime.now()).strftime("%Y")
     nowTime = (datetime.datetime.now()).strftime("%X")
     now = nowDay + "." + nowMonth + "." + nowYear + " " + nowTime
-
     print('{0.user} is online at '.format(client) + now)
+
+
+    # Setting `Playing ` status
+    await client.change_presence(activity=discord.Game(name="Destiny 2"))
+    #await client.change_presence(activity=discord.Game(name="mit Ruben dem dicken Fisch"))
+
+    # Setting `Streaming ` status
+    #await client.change_presence(activity=discord.Streaming(name="My Stream", url=my_twitch_url))
+    # Setting `Listening ` status
+    #await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="a song"))
+    # Setting `Watching ` status
+    #await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="a movie"))
 
 
 @client.event
 async def on_message(message):
-    # function Setup
+    #await message.channel.send("**Clemens muss aufhören!**")
+    #function Setup
     def loggeneral():
         with open("log.csv", "a") as file:
             file.write(message.author.name + ";" + now + ";" + message.content + "\n")
@@ -334,6 +348,14 @@ async def on_message(message):
         sentence = sentence.replace("b'", "")
         sentence = sentence.replace("'", "")
         await message.channel.send(sentence)
+
+
+
+    if ":(" in message.content or ":frowning:" in message.content or "😦" in message.content:
+      await message.channel.send(":(")
+
+    if ":)" == message.content:
+      await message.channel.send(":)")
 
 
 keep_alive()
