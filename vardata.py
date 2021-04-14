@@ -3,11 +3,6 @@ positive = "👍"
 negative = "👎"
 maybe = "🤷"
 
-
-
-
-
-
 raidCombList = ["Dienstag;20:00;2",
                 "Mittwoch;20:00;3",
                 "Donnerstag;20:00;4",
@@ -25,7 +20,6 @@ pEmoji4 = "🟨"
 pEmoji5 = "🟥"
 pEmojiX = "✅"
 
-
 pX = "Ich möchte einfach raiden - egal was(Wenn diese Option ausgewählt wird bitte nichts anderes auswählen)"
 
 pExplain = "**Erklärung für Prioritäts-Abstimmung:**\n\
@@ -34,14 +28,13 @@ pExplain = "**Erklärung für Prioritäts-Abstimmung:**\n\
             " + pEmoji3 + " Ich möchte, weil ich bock hab\n\
             " + pEmoji4 + " Ich mach mit wenn jemand fehlt\n\
             " + pEmoji5 + " Ich möchte auf gar keinen fall\n\
-            " + pEmojiX + "" + pX 
+            " + pEmojiX + "" + pX
 
 pRaidList = ["Deep Stone Crypt",
              "Garden of Salvation",
              "Last Wish",
              "Last Wish - only Riven(3x)",
              ]
-
 
 wishEffects = [
     "grants an Ethereal Key.",
@@ -69,14 +62,14 @@ helopText = "**Available Commands:**\n\
       `!gos 2`: GoS 2nd Encounter map\n\
       `!gos 3`: GoS 3rd Encounter Eyes\n\
       `!gos loot`: GoS LootTablen\n\
-      `!LW vault`: LW Vault Symbols\n\
+      `!vault`: LW Vault Symbols\n\
       `!wish all`: Overview over all Wishes \n\
       `!wish` + number(1-14): shows the selected wish\n\
       `!wahrheit`: Beschert dir die Erleuchtung nach der du dein Leben lang gesucht hast! "
 
-#genderTable
-#!xxtime
-#!clear
-#!write
-#!send
-#!nein
+# genderTable
+# !xxtime
+# !clear
+# !write
+# !send
+# !nein

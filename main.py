@@ -1,26 +1,21 @@
 import discord
 import os
 import datetime
-from datetime import timedelta
-from time import sleep
+
 from keepAlive import keep_alive
-from loremipsum import get_sentences
 
-from vardata import*
-from functions import*
+from commands import commands, exactCommands
+from vardata import *
+from functionsUtility import *
+from functionsMemes import *
+from functionsDestiny import *
+
 client = discord.Client()
-
-
-
-
-
-
+prefix = "!"
 
 """def log(text):
     with open("log.csv", "a") as file:
         file.write(text + "\n")"""
-
-
 
 
 @client.event
@@ -32,36 +27,30 @@ async def on_ready():
     now = nowDay + "." + nowMonth + "." + nowYear + " " + nowTime
     print('{0.user} is online at '.format(client) + now)
 
-
     # Setting `Playing ` status
     await client.change_presence(activity=discord.Game(name="Destiny 2"))
-    #await client.change_presence(activity=discord.Game(name="mit Ruben dem dicken Fisch"))
+    # await client.change_presence(activity=discord.Game(name="mit Ruben dem dicken Fisch"))
 
     # Setting `Streaming ` status
-    #await client.change_presence(activity=discord.Streaming(name="My Stream", url=my_twitch_url))
+    # await client.change_presence(activity=discord.Streaming(name="My Stream", url=my_twitch_url))
     # Setting `Listening ` status
-    #await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="a song"))
+    # await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="a song"))
     # Setting `Watching ` status
-    #await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="a movie"))
+    # await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="a movie"))
 
 
 @client.event
 async def on_message(message):
-    #await message.channel.send("**Clemens muss aufhören!**")
-    #function Setup
-    def loggeneral():
-        with open("log.csv", "a") as file:
-            file.write(message.author.name + ";" + now + ";" + message.content + "\n")
-
-
-
-
     # time Setup
     nowDay = (datetime.datetime.now()).strftime("%d")
     nowMonth = (datetime.datetime.now()).strftime("%m")
     nowYear = (datetime.datetime.now()).strftime("%Y")
     nowTime = (datetime.datetime.now()).strftime("%X")
     now = nowDay + "." + nowMonth + "." + nowYear + " " + nowTime
+
+    async def loggeneral(message):
+        with open("log.csv", "a") as file:
+            file.write(message.author.name + ";" + now + ";" + message.content + "\n")
 
     # Reactions
     # Reactions RaidDates
@@ -91,163 +80,18 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    # commands
-    if "!throne" in message.content:
-        loggeneral()
-        await message.delete()
-        await message.channel.send("Shattered Throne: 1st Encounter map:")
-        await message.channel.send(file=discord.File("guides/Dungeons/throne.png"))
-
-    if "!heresy" in message.content or "!pit" in message.content:
-        loggeneral()
-        await message.delete()
-        await message.channel.send("Pit of Heresy: 4th Encounter map:")
-        await message.channel.send(file=discord.File("guides/Dungeons/heresy.png"))
-
-    if "!wish" in message.content:
-        loggeneral()
-        await message.delete()
-        number = message.content.split("!wish ")[1]
-        if number == "all":
-            i = 0
-            for effect in wishEffects:
-                i = i + 1
-                await message.channel.send(str(i) + ". Wish: " + effect)
+    if message.content.startswith(prefix):
+        loggeneral(message)
+        if message.content.replace(prefix, "") in exactCommands:
+            exactCommands[message.content.replace(prefix, "")](message)
         else:
-            await message.channel.send(number + ". Wish: " + wishEffects[int(number) - 1])
-            await message.channel.send(file=discord.File("guides/Raids/LW/wishes/wish-" + number + ".jpg"))
-
-    if"!riven" in message.content:
-      loggeneral()
-      await message.delete()
-      number = "7"
-      await message.channel.send(number + ". Wish: " + wishEffects[int(number) - 1])
-      await message.channel.send(file=discord.File("guides/Raids/LW/wishes/wish-" + number + ".jpg"))
-
-
-    if "!LW vault" in message.content:
-      loggeneral()
-      await message.delete()
-      await message.channel.send("LW Vault Symbols:")
-      await message.channel.send(file=discord.File("guides/Raids/LW/LW_vault_symbols.png"))
+            for item in commands:
+                if item in message:
+                    commands[item](message)
 
 
 
-    if "!dsc" in message.content:
-        loggeneral()
-        await message.delete()
-        try:
-          number = message.content.split("!dsc ")[1]
-        except:
-          await message.channel.send("Please enter a Number or word behind `!dsc`")
-        if number == "1" or number == "3":
-            await message.channel.send("DSC " + number + ". Encounter map: ")
-            await message.channel.send(file=discord.File("guides/Raids/DSC/crypta_map_0" + number + ".png"))
-        elif number == "loot" or number == "Loot":
-          await message.channel.send("DSC Loot Table:")
-          await message.channel.send(file=discord.File("guides/Raids/DSC/dsc_loottable.png"))
 
-
-    if "!gos" in message.content:
-        loggeneral()
-        await message.delete()
-        try:
-          number = message.content.split("!gos ")[1]
-        except:
-          await message.channel.send("Please enter a Number or word behind `!gos`")
-        if number == "2" or number == "3":
-            await message.channel.send("GoS " + number + ". Encounter: ")
-            await message.channel.send(file=discord.File("guides/Raids/GOS/gos_" + number + ".png"))
-        elif number == "loot" or number == "Loot":
-          await message.channel.send("GoS Loot Table:")
-          await message.channel.send(file=discord.File("guides/Raids/GOS/gos_loottable.png"))      
-
-
- 
-
-    if "!helöp" in message.content:
-        loggeneral()
-        await message.delete()
-        await message.channel.send(helopText)
-
-    if "!wahrheit" in message.content:
-        loggeneral()
-        await message.channel.send("Robin hat Recht!")
-
-    if "!xxtime" in message.content:
-        loggeneral()
-        await message.delete()
-        xxtime = (datetime.datetime.now()).strftime("%c")
-        for i in range(1, 60):
-            if xxtime != (datetime.datetime.now()).strftime("%c"):
-                xxtime = (datetime.datetime.now()).strftime("%c")
-                await message.channel.send(xxtime)
-            else:
-                sleep(0.49)
-
-    if "!wp" == message.content:
-        loggeneral()
-        await wp(message)
-
-    if "!wpx" == message.content:
-        loggeneral()
-        await wp(message)
-        await message.channel.send("---")
-        await wpraids(message)
-
-    if "!send" in message.content:
-        text = message.content
-        text = text.replace("!send", "")
-
-        loggeneral()
-        await message.channel.send(text)
-        await message.delete()
-
-    if "!nein" in message.content:
-        await message.delete()
-        loggeneral()
-        for i in range(5):
-            await message.channel.send("**NEIN**")
-
-    if "!clear" in message.content:
-        loggeneral()
-        args = message.content.split(" ")
-        if len(args) == 2 and args[1].isdigit():
-            limit = int(args[1]) + 1
-            deleted = await message.channel.purge(limit=limit)
-            await message.channel.send("{} messages deleted.".format(len(deleted) - 1))
-            sleep(0.7)
-            await message.channel.purge(limit=1)
-        elif args[1] == "x":
-            await message.channel.send("You got me there xD")
-        else:
-            await message.channel.send("`!clear x` clears x messages. \n Your command doesn't fit this pattern!")
-
-    if "!genderTable" in message.content:
-      await message.delete()
-      await message.channel.send("Bitte wählen Sie:in Ihr:in Geschlecht:in!")
-      await message.channel.send(file=discord.File("guides/genderTable.jpg"))
-    
-    if "!write" in message.content:
-      await message.delete()
-      try:
-        number =  int(message.content.split("!write ")[1])
-      except:
-        number = 3      
-      sentences_list = get_sentences(number)
-      for sentence in sentences_list:
-        sentence = sentence.replace("B'", "")
-        sentence = sentence.replace("b'", "")
-        sentence = sentence.replace("'", "")
-        await message.channel.send(sentence)
-
-
-
-    if ":(" in message.content or ":frowning:" in message.content or "😦" in message.content:
-      await message.channel.send(":(")
-
-    if ":)" == message.content:
-      await message.channel.send(":)")
 
 
 keep_alive()
