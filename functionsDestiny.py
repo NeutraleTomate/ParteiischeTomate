@@ -80,7 +80,7 @@ async def gos(message):
     try:
         number = message.content.split("!gos ")[1]
     except:
-        await vaildNum("message,!gos")
+        await vaildNum(message,"!gos")
         return
     if number == "2" or number == "3":
         await message.channel.send("GoS " + number + ". Encounter: ")

@@ -13,3 +13,7 @@ def run():
 def keep_alive():
     t = Thread(target=run)
     t.start()
+
+
+# by freecodecamp.org
+# https://www.youtube.com/watch?v=SPTfmiYiuok
