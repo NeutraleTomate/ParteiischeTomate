@@ -3,21 +3,15 @@ import os
 import datetime
 
 from keepAlive import keep_alive
-
 from commands import commands, exactCommands
 from vardata import *
 from functionsUtility import *
 from functionsMemes import *
 from functionsDestiny import *
-from functionsMusic import*
+
 
 client = discord.Client()
 prefix = "!"
-
-"""def log(text):
-    with open("log.csv", "a") as file:
-        file.write(text + "\n")"""
-
 
 @client.event
 async def on_ready():
@@ -30,8 +24,6 @@ async def on_ready():
 
     # Setting `Playing ` status
     #await client.change_presence(activity=discord.Game(name="Destiny 2"))
-    # await client.change_presence(activity=discord.Game(name="mit Ruben dem dicken Fisch"))
-
     # Setting `Streaming ` status
     await client.change_presence(activity=discord.Streaming(name="Destiny 2", url='https://www.youtube.com/watch?v=dQw4w9WgXcQ'))
     # Setting `Listening ` status

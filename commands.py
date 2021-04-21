@@ -1,7 +1,7 @@
 from functionsUtility import *
 from functionsMemes import *
 from functionsDestiny import *
-from functionsMusic import*
+
 
 
 commands = {
@@ -16,11 +16,6 @@ commands = {
     "xxtime": xxtime,
     "genderTable": genderTable,
     "write": write,
-    # emotions
-    #":(": sad,
-    #":frowning:": sad,
-    #"😦": sad,
-    # ":)": happy(message),  # x
 
     # Destiny commands
     # org
@@ -33,7 +28,6 @@ commands = {
     "gos": gos,
     "wish": wish,
     "vault": vault,
-    "davis":davis,
 }
 
 exactCommands = {

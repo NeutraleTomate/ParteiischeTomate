@@ -1,4 +1,3 @@
-customEmoji1 = "eis"
 positive = "👍"
 negative = "👎"
 maybe = "🤷"
