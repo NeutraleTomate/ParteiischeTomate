@@ -1,6 +1,7 @@
 from functionsUtility import *
 from functionsMemes import *
 from functionsDestiny import *
+from functionsMusic import*
 
 
 commands = {
@@ -32,9 +33,10 @@ commands = {
     "gos": gos,
     "wish": wish,
     "vault": vault,
+    "davis":davis,
 }
 
 exactCommands = {
-    "wp": wp,  # x
-    "wpx": wpx,  # x
+    "wp": wp,
+    "wpx": wpx,
 }

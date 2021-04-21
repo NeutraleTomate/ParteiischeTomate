@@ -9,6 +9,7 @@ from vardata import *
 from functionsUtility import *
 from functionsMemes import *
 from functionsDestiny import *
+from functionsMusic import*
 
 client = discord.Client()
 prefix = "!"
@@ -28,11 +29,11 @@ async def on_ready():
     print('{0.user} is online at '.format(client) + now)
 
     # Setting `Playing ` status
-    await client.change_presence(activity=discord.Game(name="Destiny 2"))
+    #await client.change_presence(activity=discord.Game(name="Destiny 2"))
     # await client.change_presence(activity=discord.Game(name="mit Ruben dem dicken Fisch"))
 
     # Setting `Streaming ` status
-    # await client.change_presence(activity=discord.Streaming(name="My Stream", url=my_twitch_url))
+    await client.change_presence(activity=discord.Streaming(name="Destiny 2", url='https://www.youtube.com/watch?v=dQw4w9WgXcQ'))
     # Setting `Listening ` status
     # await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="a song"))
     # Setting `Watching ` status
