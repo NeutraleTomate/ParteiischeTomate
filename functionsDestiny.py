@@ -106,7 +106,7 @@ async def wish(message):
         for effect in wishEffects:
             i = i + 1
             await message.channel.send(str(i) + ". Wish: " + effect)
-            await message.delete()
+            #await message.delete()
     elif number.isdigit():
         if int(number) >= 1 and int(number) <= 14:
             await message.channel.send(number + ". Wish: " + wishEffects[int(number) - 1])

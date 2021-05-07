@@ -12,6 +12,8 @@ from functionsDestiny import *
 
 client = discord.Client()
 prefix = "!"
+intents = discord.Intents.default()
+intents.members = True 
 
 @client.event
 async def on_ready():
@@ -34,12 +36,7 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    # time Setup
-    nowDay = (datetime.datetime.now()).strftime("%d")
-    nowMonth = (datetime.datetime.now()).strftime("%m")
-    nowYear = (datetime.datetime.now()).strftime("%Y")
-    nowTime = (datetime.datetime.now()).strftime("%X")
-    now = nowDay + "." + nowMonth + "." + nowYear + " " + nowTime
+
 
     async def loggeneral(message):
         with open("log.csv", "a") as file:
@@ -68,6 +65,46 @@ async def on_message(message):
 
         if message.content == pX:
             await message.add_reaction(pEmojiX)
+
+
+
+
+
+    if message.content == "!leaveServer":
+      for guild in client.guilds:
+        print(guild.id)
+      toLeave = None
+      await guild.leave()
+
+
+    if message.content == "!deleteAllChannels":
+        for guild in client.guilds:
+            if guild.name == "Server von NeutraleTomate":
+                for channel in guild.channels:
+                    try:
+                      await channel.delete()
+                    except:
+                      print(str(channel)+" no Access")
+    
+    if message.content == "!kickAllMembers":
+        for guild in client.guilds:
+            if guild.name == "Test":
+                   
+                print(intents.members)
+                #print(guild.fetch_members(limit=None))
+                async for member in guild.fetch_members(limit=150):
+                    print(member.name)
+                    #   async for member in guild.fetch_members(limit=None):
+                    try:
+                      await member.kick()
+                    except:
+                      print(str(member)+" no Access")
+
+
+                      
+
+      
+
 
     # ignoring bots
     if message.author == client.user:
