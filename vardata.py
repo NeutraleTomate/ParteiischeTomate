@@ -29,7 +29,8 @@ pExplain = "**Erklärung für Prioritäts-Abstimmung:**\n\
             " + pEmoji5 + " Ich möchte auf gar keinen fall\n\
             " + pEmojiX + "" + pX
 
-pRaidList = ["Deep Stone Crypt",
+pRaidList = [#"Vault of Glass",
+             "Deep Stone Crypt",
              "Garden of Salvation",
              "Last Wish",
              "Last Wish - only Riven(3x)",

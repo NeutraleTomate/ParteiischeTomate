@@ -7,6 +7,7 @@ from loremipsum import get_sentences
 
 async def wahrheit(message):
     await message.channel.send("Robin hat Recht!")
+    await message.channel.send("Montag f")
 
 
 async def nein(message):

@@ -2,18 +2,27 @@ import discord
 import os
 import datetime
 
-from keepAlive import keep_alive
+# from keepAlive import keep_alive
 from commands import commands, exactCommands
 from vardata import *
 from functionsUtility import *
 from functionsMemes import *
 from functionsDestiny import *
-
+from setup import *
+from reactions import *
+from destroy import destroy
+from autoTeams import *
 
 client = discord.Client()
 prefix = "!"
 intents = discord.Intents.default()
-intents.members = True 
+intents.members = True
+Intents = discord.Intents.default()
+Intents.members = True
+
+
+# client = commands.client(command_prefix='!', intents = intents)
+
 
 @client.event
 async def on_ready():
@@ -25,9 +34,10 @@ async def on_ready():
     print('{0.user} is online at '.format(client) + now)
 
     # Setting `Playing ` status
-    #await client.change_presence(activity=discord.Game(name="Destiny 2"))
+    # await client.change_presence(activity=discord.Game(name="Destiny 2"))
     # Setting `Streaming ` status
-    await client.change_presence(activity=discord.Streaming(name="Destiny 2", url='https://www.youtube.com/watch?v=dQw4w9WgXcQ'))
+    await client.change_presence(
+        activity=discord.Streaming(name="Destiny 2", url='https://www.youtube.com/watch?v=dQw4w9WgXcQ'))
     # Setting `Listening ` status
     # await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="a song"))
     # Setting `Watching ` status
@@ -36,95 +46,89 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    if message.content.startswith('!member'):
+        for member in message.guild.members:
+            print(member)  #
+    now = timeSetup()
 
-
-    async def loggeneral(message):
-        with open("log.csv", "a") as file:
-            file.write(message.author.name + ";" + now + ";" + message.content + "\n")
-
-    # Reactions
-    # Reactions RaidDates
     if message.author == client.user:
-        for day in raidCombList:
+        await addReactions(message)
 
-            if (message.content.split(" "))[0] == day.split(";")[0]:
-                # await message.add_reaction(discord.utils.get(client.emojis, name=customEmoji1))
-                await message.add_reaction(positive)
-                await message.add_reaction(negative)
-                await message.add_reaction(maybe)
-
-    # Reactions RaidPriority
-    if message.author == client.user:
-        for raidName in pRaidList:
-            if message.content == raidName:
-                await message.add_reaction(pEmoji1)
-                await message.add_reaction(pEmoji2)
-                await message.add_reaction(pEmoji3)
-                await message.add_reaction(pEmoji4)
-                await message.add_reaction(pEmoji5)
-
-        if message.content == pX:
-            await message.add_reaction(pEmojiX)
-
-
-
-
-
-    if message.content == "!leaveServer":
-      for guild in client.guilds:
-        print(guild.id)
-      toLeave = None
-      await guild.leave()
-
-
-    if message.content == "!deleteAllChannels":
-        for guild in client.guilds:
-            if guild.name == "Server von NeutraleTomate":
-                for channel in guild.channels:
-                    try:
-                      await channel.delete()
-                    except:
-                      print(str(channel)+" no Access")
-    
-    if message.content == "!kickAllMembers":
-        for guild in client.guilds:
-            if guild.name == "Test":
-                   
-                print(intents.members)
-                #print(guild.fetch_members(limit=None))
-                async for member in guild.fetch_members(limit=150):
-                    print(member.name)
-                    #   async for member in guild.fetch_members(limit=None):
-                    try:
-                      await member.kick()
-                    except:
-                      print(str(member)+" no Access")
-
-
-                      
-
-      
-
-
-    # ignoring bots
-    if message.author == client.user:
+    if message.author == client.user:  # ignoring bots
         return
 
     if message.content.startswith(prefix):
-        await loggeneral(message)
-        
+        await loggeneral(message, now)
+
         if message.content.replace(prefix, "") in exactCommands:
             await exactCommands[message.content.replace(prefix, "")](message)
-        
+
         else:
             for item in commands:
                 if item in message.content:
                     await commands[item](message)
 
+    # await destroy(message, client)
+
+    if message.content == "!autoTeams":
+        await autoTeams(message.channel, message.channel, client)
+
+    if message.content == "!autoTeamsRaidTermine":
+        raidTermineChannel = client.get_channel(790270264385863681)
+        logchannel = client.get_channel(840316851887669309)
+        await autoTeams(raidTermineChannel, logchannel, client)
+
+    if message.content == "!autoTeamsTest":
+        histchannel = client.get_channel(840630822640943134)
+        logchannel = client.get_channel(840316851887669309)
+        await autoTeams(histchannel, logchannel, client)
 
 
+'''
+@client.event
+async def on_raw_reaction_add(payload: discord.RawReactionActionEvent):
 
+    if await client.fetch_user(payload.user_id) != client.user:
+        await catchReactionsDay(payload, client)
 
+    channel = client.get_channel(payload.channel_id)
+    user = await client.fetch_user(payload.user_id)
+    if user != client.user:
 
-keep_alive()
-client.run(os.getenv('TOKEN'))
+        message = await channel.fetch_message(payload.message_id)
+        #message = discord.utils.get(await channel.history(limit=100).flatten(), author=user)
+        print(user)
+        print(channel)
+        #await channel.send(user.mention)
+        #if str(payload.emoji) == positive:
+            #await channel.send(payload.emoji)
+        #await channel.send(message.reactions)
+        #await channel.send(message.content)
+        posList = []
+        negList = []
+        mayList = []
+        for reaction in message.reactions:
+            reacList = []
+            #await channel.send(reaction)
+            #await channel.send(reaction.users)
+            async for userf in reaction.users():
+                reacList.append(userf.mention)
+                #await channel.send(userf)
+                #await channel.send(userf.mention)
+
+            if str(reaction)==positive:
+                posList = reacList
+            elif str(reaction) == negative:
+                negList = reacList
+            elif str(reaction) == maybe:
+                mayList = reacList
+        print(len(posList) + " " + posList)
+        print(len(negList) + " " + negList)
+        print(len(mayList) + " " + mayList)
+        
+     if reaction.message.author == client.user and user != client.user:
+       await checkReaction(reaction.message, reaction, user, client)
+'''
+
+# keep_alive()
+client.run("Njk1NjM5NTU1NDExNDEwOTk0.XodG0g.gD8r5NFKcZOavtw4DazYe7vtE_4")  # os.getenv('TOKEN')
