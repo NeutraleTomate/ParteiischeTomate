@@ -2,7 +2,7 @@ import discord
 import os
 import datetime
 
-# from keepAlive import keep_alive
+from keepAlive import keep_alive
 from commands import commands, exactCommands
 from vardata import *
 from functionsUtility import *
@@ -130,5 +130,5 @@ async def on_raw_reaction_add(payload: discord.RawReactionActionEvent):
        await checkReaction(reaction.message, reaction, user, client)
 '''
 
-# keep_alive()
-client.run("Njk1NjM5NTU1NDExNDEwOTk0.XodG0g.gD8r5NFKcZOavtw4DazYe7vtE_4")  # os.getenv('TOKEN')
+keep_alive()
+client.run("TOKEN")  # os.getenv('TOKEN')
