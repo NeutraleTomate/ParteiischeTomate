@@ -1,53 +1,37 @@
-from vardata import *
-
-'''async def catchReactionsDay(payload, client):
-    channel = client.get_channel(payload.channel_id)
-    message = await channel.fetch_message(payload.message_id)
-'''
+from vardata import raidDayList,\
+                    pRaidList, pEmoji1, pEmoji2, pEmoji3, pEmoji4, pEmoji5, pEmojiX, pX,\
+                    positive, negative, maybe\
 
 
-async def autoTeams(histchannel, teamchannel, client):
-    Dienstag20 = []
-    Mittwoch20 = []
-    Donnerstag20 = []
-    Freitag20 = []
-    Samstag15 = []
-    Samstag20 = []
-    Sonntag15 = []
-    Sonntag20 = []
-    Montag20 = []
+
+async def autoTeams(sourcechannel, teamchannel, client):
     dayListsDic = {
-        "Dienstag;20:00": Dienstag20,
-        "Mittwoch;20:00": Mittwoch20,
-        "Donnerstag;20:00": Donnerstag20,
-        "Freitag;20:00": Freitag20,
-        "Samstag;15:00": Samstag15,
-        "Samstag;20:00": Samstag20,
-        "Sonntag;15:00": Sonntag15,
-        "Sonntag;20:00": Sonntag20,
-        "Montag;20:00": Montag20
+        "Dienstag;20:00": [],
+        "Mittwoch;20:00": [],
+        "Donnerstag;20:00": [],
+        "Freitag;20:00": [],
+        "Samstag;15:00": [],
+        "Samstag;20:00": [],
+        "Sonntag;15:00": [],
+        "Sonntag;20:00": [],
+        "Montag;20:00": []
     }
 
-    VoG = []
-    DSC = []
-    GoS = []
-    LW = []
-    LWoR = []
     pListsDic = {
-        "Vault of Glass": VoG,
-        "Deep Stone Crypt": DSC,
-        "Garden of Salvation": GoS,
-        "Last Wish": LW,
-        "Last Wish - only Riven(3x)": LWoR,
+        "Vault of Glass": [],
+        "Deep Stone Crypt": [],
+        "Garden of Salvation": [],
+        "Last Wish": [],
+        "Last Wish - only Riven(3x)": [],
     }
     playerList = {}
 
-    async for message in histchannel.history(oldest_first=True):
-        for day in raidCombList:
+    async for message in sourcechannel.history(oldest_first=True):
+        for day in raidDayList:
             try:
-                mesCond = ((message.content.split(" "))[0]) + ((message.content.split(" "))[2])
+                messageCond = ((message.content.split(" "))[0]) + ((message.content.split(" "))[2])
                 dayCond = (day.split(";")[0]) + (day.split(";")[1])
-                condition = mesCond == dayCond
+                condition = messageCond == dayCond
             except IndexError:
                 condition = False
             if condition:
@@ -73,9 +57,7 @@ async def autoTeams(histchannel, teamchannel, client):
                 dayListsDic[elem] = [message.content, posList, negList, mayList]
 
                 print(elem)
-                '''print((dayListsDic[elem])[0])
-                print((dayListsDic[elem])[1])
-                print((dayListsDic[elem])[2])'''
+
 
         for raid in pRaidList:
             if message.content == raid:
@@ -105,11 +87,7 @@ async def autoTeams(histchannel, teamchannel, client):
                 pListsDic[elem] = [plist1, plist2, plist3, plist4, plist5]
 
                 print(elem)
-                '''print((pListsDic[elem])[0])
-                print((pListsDic[elem])[1])
-                print((pListsDic[elem])[2])
-                print((pListsDic[elem])[3])
-                print((pListsDic[elem])[4])'''
+
 
         if message.content == pX:
             plistX = []
@@ -137,8 +115,7 @@ async def autoTeams(histchannel, teamchannel, client):
                 for player in plistX:
                     if player in day[1]:
                         player = str(player)
-                        if player == '<@697121563392081981>' and raidNameX != 'Deep Stone Crypt':
-                          continue
+
                         if (raidNameX not in playerList[player]) and (day[0] not in playerList[player]):
                             raidTeam.append(player)
 
@@ -155,8 +132,6 @@ async def autoTeams(histchannel, teamchannel, client):
                         print((raidNameX not in playerList[player]))
                         # print(raidNameX)
                         # print(playerList[player])
-                        if player == '<@697121563392081981>' and raidNameX != 'Deep Stone Crypt':
-                          continue
                         if (raidNameX not in playerList[player]) and (day[0] not in playerList[player]):
                             raidTeam.append(player)
 

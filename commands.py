@@ -1,23 +1,21 @@
-from functionsUtility import *
-from functionsMemes import *
-from functionsDestiny import *
+from functionsUtility import help, send, clear
+from functionsMemes import wahrheit, nein, xxtime, write
+from functionsDestiny import throne, pit, vog, dsc, gos, wish, vault, wp, wpx
 
-commands = {
+commands = { # Diese Commands werden auch erkannt, wenn die Nachricht noch etwas anderes außer dem Wort enthält(z.B. "!wish 4", "!dsc loot",...)
     # utility
-    "helöp": helop,
+    "help": help,
     "send": send,
     "clear": clear,
 
     # memes
     "wahrheit": wahrheit,
-    #"w": wahrheit,
     "nein": nein,
     "xxtime": xxtime,
-    "genderTable": genderTable,
     "write": write,
 
     # Destiny commands
-    # Guides
+
     "throne": throne,
     "pit": pit,
     "heresy": pit,
@@ -29,7 +27,7 @@ commands = {
 
 }
 
-exactCommands = {
+exactCommands = { # Diese Commands müssen exakt erkannt werden
     "wp": wp,
     "wpx": wpx,
 

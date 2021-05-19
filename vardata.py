@@ -2,7 +2,7 @@ positive = "👍"
 negative = "👎"
 maybe = "🤷"
 
-raidCombList = ["Dienstag;20:00;2",
+raidDayList = ["Dienstag;20:00;2",
                 "Mittwoch;20:00;3",
                 "Donnerstag;20:00;4",
                 "Freitag;20:00;5",
@@ -29,7 +29,8 @@ pExplain = "**Erklärung für Prioritäts-Abstimmung:**\n\
             " + pEmoji5 + " Ich möchte auf gar keinen fall\n\
             " + pEmojiX + "" + pX
 
-pRaidList = [#"Vault of Glass",
+# VoG ist ein Raid, welcher erst am 22.05. released wird -> Es gibt noch keine passenden Guides
+pRaidList = [#"Vault of Glass", 
              "Deep Stone Crypt",
              "Garden of Salvation",
              "Last Wish",
@@ -53,23 +54,20 @@ wishEffects = [
     "spawns Corruptes eggs."
 
 ]
-helopText = "**Available Commands:**\n\
+
+helpText = "**Available Commands:**\n\
       `!throne`: Shattered Throne 1st Encounter map\n\
       `!heresy` or `!pit`: Pit of Heresy 4th Encounter map\n\
+      `!vog X`: VoG X Encounter \n\
+      `!vog loot`: VoG LootTable\n\
       `!dsc 1`: DSC 1st Encounter map\n\
       `!dsc 3`: DSC 3rd Encounter map\n\
       `!dsc loot`: DSC LootTable\n\
       `!gos 2`: GoS 2nd Encounter map\n\
       `!gos 3`: GoS 3rd Encounter Eyes\n\
-      `!gos loot`: GoS LootTablen\n\
+      `!gos loot`: GoS LootTable\n\
       `!vault`: LW Vault Symbols\n\
       `!wish all`: Overview over all Wishes \n\
       `!wish` + number(1-14): shows the selected wish\n\
       `!wahrheit`: Beschert dir die Erleuchtung nach der du dein Leben lang gesucht hast! "
 
-# genderTable
-# !xxtime
-# !clear
-# !write
-# !send
-# !nein

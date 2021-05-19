@@ -1,7 +1,7 @@
 import discord
 import datetime
 from datetime import timedelta
-from vardata import *
+from vardata import raidDayList, pRaidList, pExplain, pX, wishEffects
 
 
 async def noVaildNum(message, command):
@@ -11,14 +11,15 @@ async def noVaildNum(message, command):
 async def wp(message):
     await message.delete()
 
-    addent = int((datetime.datetime.now()).strftime("%w"))
-    addent += -2
-    if addent >= 3:
-        addent += -7
+    gap = int((datetime.datetime.now()).strftime("%w"))  #Abstand zu letztem Sonntag in Tagen
+    gap -= 2 # Abstand zu letztem Dienstag in Tagen
 
-    date = datetime.datetime.now() - timedelta(days=addent)
+    if gap >= 3: # Wenn Tag >= Freitag (Freitag hat einen Abstand von 3 Tagen zu Dienstag)
+        gap -= 7 # dann eine Woche weiter(bis Donnerstag: letzter Dienstag, ab Freitag nächster Dienstag)
 
-    for raidComb in raidCombList:
+    date = datetime.datetime.now() - timedelta(days=gap) # findet nächsten/letzten Dienstag als Objekt der Klasse datetime
+
+    for raidComb in raidDayList:
         raidComb = raidComb.split(";")
         raidDay = raidComb[0]
         raidTime = raidComb[1]
@@ -61,17 +62,17 @@ async def pit(message):
 
 async def vog(message):
     try:
-        number = message.content.split("!dsc ")[1]
+        number = message.content.split("!vog ")[1]
     except:
-        await noVaildNum(message, "!dsc")
+        await noVaildNum(message, "!vog")
         return
     if number == "1" or number == "3":
-        await message.channel.send("DSC " + number + ". Encounter map: ")
-        await message.channel.send(file=discord.File("guides/Raids/DSC/crypta_map_0" + number + ".png"))
+        await message.channel.send("VOG " + number + ". Encounter map: ")
+        await message.channel.send(file=discord.File("guides/Raids/DSC/vog_" + number + ".png"))
         await message.delete()
     elif number == "loot" or number == "Loot":
         await message.channel.send("VoG Loot Table:")
-        await message.channel.send(file=discord.File("guides/Raids/VoG/dsc_loottable.png"))
+        await message.channel.send(file=discord.File("guides/Raids/VoG/vog_loottable.png"))
         await message.delete()
     else:
         await noVaildNum(message, "!vog")
@@ -84,7 +85,7 @@ async def dsc(message):
         return
     if number == "1" or number == "3":
         await message.channel.send("DSC " + number + ". Encounter map: ")
-        await message.channel.send(file=discord.File("guides/Raids/DSC/crypta_map_0" + number + ".png"))
+        await message.channel.send(file=discord.File("guides/Raids/DSC/dsc_" + number + ".png"))
         await message.delete()
     elif number == "loot" or number == "Loot":
         await message.channel.send("DSC Loot Table:")

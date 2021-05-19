@@ -1,7 +1,7 @@
 import datetime
 
 
-def timeSetup():
+def timeNow():
     nowDay = (datetime.datetime.now()).strftime("%d")
     nowMonth = (datetime.datetime.now()).strftime("%m")
     nowYear = (datetime.datetime.now()).strftime("%Y")
@@ -9,6 +9,6 @@ def timeSetup():
     return nowDay + "." + nowMonth + "." + nowYear + " " + nowTime
 
 
-async def loggeneral(message, now):
+async def log(message, now):
     with open("log.csv", "a") as file:
         file.write(message.author.name + ";" + now + ";" + message.content + "\n")

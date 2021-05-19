@@ -1,10 +1,10 @@
 from time import sleep
-from vardata import *
+from vardata import helpText
 
 
-async def helop(message):
+async def help(message):
     await message.delete()
-    await message.channel.send(helopText)
+    await message.channel.send(helpText)
 
 
 async def send(message):
