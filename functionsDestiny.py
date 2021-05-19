@@ -4,7 +4,7 @@ from datetime import timedelta
 from vardata import *
 
 
-async def vaildNum(message, command):
+async def noVaildNum(message, command):
     await message.channel.send("Please enter a valid Number or word behind `{}`".format(command))
 
 
@@ -17,7 +17,7 @@ async def wp(message):
         addent += -7
 
     date = datetime.datetime.now() - timedelta(days=addent)
-    dates = []
+
     for raidComb in raidCombList:
         raidComb = raidComb.split(";")
         raidDay = raidComb[0]
@@ -32,8 +32,7 @@ async def wp(message):
         # year = date.strftime("%Y")
         dateToPrint = rDay + "." + month + "."  # + year
         await message.channel.send(raidDay + " " + dateToPrint + " " + raidTime)
-        dates.append(raidDay + " " + dateToPrint + " " + raidTime)
-    return dates
+
 
 
 async def wpraids(message):
@@ -64,7 +63,7 @@ async def vog(message):
     try:
         number = message.content.split("!dsc ")[1]
     except:
-        await vaildNum(message, "!dsc")
+        await noVaildNum(message, "!dsc")
         return
     if number == "1" or number == "3":
         await message.channel.send("DSC " + number + ". Encounter map: ")
@@ -75,13 +74,13 @@ async def vog(message):
         await message.channel.send(file=discord.File("guides/Raids/VoG/dsc_loottable.png"))
         await message.delete()
     else:
-        await vaildNum(message, "!vog")
+        await noVaildNum(message, "!vog")
 
 async def dsc(message):
     try:
         number = message.content.split("!dsc ")[1]
     except:
-        await vaildNum(message, "!dsc")
+        await noVaildNum(message, "!dsc")
         return
     if number == "1" or number == "3":
         await message.channel.send("DSC " + number + ". Encounter map: ")
@@ -92,14 +91,14 @@ async def dsc(message):
         await message.channel.send(file=discord.File("guides/Raids/DSC/dsc_loottable.png"))
         await message.delete()
     else:
-        await vaildNum(message, "!dsc")
+        await noVaildNum(message, "!dsc")
 
 
 async def gos(message):
     try:
         number = message.content.split("!gos ")[1]
     except:
-        await vaildNum(message, "!gos")
+        await noVaildNum(message, "!gos")
         return
     if number == "2" or number == "3":
         await message.channel.send("GoS " + number + ". Encounter: ")
@@ -110,14 +109,14 @@ async def gos(message):
         await message.channel.send(file=discord.File("guides/Raids/GOS/gos_loottable.png"))
         await message.delete()
     else:
-        await vaildNum(message, "!gos")
+        await noVaildNum(message, "!gos")
 
 
 async def wish(message):
     try:
         number = message.content.split("!wish ")[1]
     except:
-        await vaildNum(message, "!wish")
+        await noVaildNum(message, "!wish")
         return
     if number == "all":
         i = 0
@@ -131,9 +130,9 @@ async def wish(message):
             await message.channel.send(file=discord.File("guides/Raids/LW/wishes/wish-" + number + ".jpg"))
             await message.delete()
         else:
-            await vaildNum(message, "!wish")
+            await noVaildNum(message, "!wish")
     else:
-        await vaildNum(message, "!wish")
+        await noVaildNum(message, "!wish")
 
 
 async def vault(message):

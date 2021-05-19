@@ -1,6 +1,7 @@
 import discord
 import os
 import datetime
+from datetime import time
 
 from keepAlive import keep_alive
 from commands import commands, exactCommands
@@ -19,6 +20,7 @@ intents = discord.Intents.default()
 intents.members = True
 Intents = discord.Intents.default()
 Intents.members = True
+countdown = False 
 
 
 # client = commands.client(command_prefix='!', intents = intents)
@@ -46,6 +48,16 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+
+    async def join(client, message):
+      channel = message.author.voice.voice_channel
+      await client.join_voice_channel(channel)
+    async def leave(client, message):
+      server = message.guild
+      voice_client = client.voice_client_in(server)
+      await voice_client.disconnect()
+    
+    
     if message.content.startswith('!member'):
         for member in message.guild.members:
             print(member)  #
@@ -82,6 +94,29 @@ async def on_message(message):
         histchannel = client.get_channel(840630822640943134)
         logchannel = client.get_channel(840316851887669309)
         await autoTeams(histchannel, logchannel, client)
+
+    '''if message.content == "!start countdown":
+      countdown = True 
+
+    if message.content == "!stop countdown":
+      countdown = False
+      print("cd false")
+
+    themessage = await message.channel.fetch_message(841652780048973834)
+    while countdown == True:
+          print(countdown)
+          
+          nowD = datetime.datetime.now() + timedelta(hours = 2)
+          timeD = datetime.datetime(2021, 5, 11, 19, 00, 00, 000000)
+          print(nowD)
+        
+          timeDeltaToPrint =  timeD - nowD 
+          #await message.channel.send("Countdown für Spielzeit der Klebepresse: t = -" + str(timeDeltaToPrint)[:-7])
+          toEdit = str("Countdown für Spielzeit der Klebepresse: t = -" + str(timeDeltaToPrint)[:-7])
+          await themessage.edit(content = toEdit)
+          
+          sleep(1)
+    '''
 
 
 '''
@@ -131,4 +166,4 @@ async def on_raw_reaction_add(payload: discord.RawReactionActionEvent):
 '''
 
 keep_alive()
-client.run("TOKEN")  # os.getenv('TOKEN')
+client.run(os.getenv('TOKEN'))

@@ -10,7 +10,7 @@ commands = {
 
     # memes
     "wahrheit": wahrheit,
-    "w": wahrheit,
+    #"w": wahrheit,
     "nein": nein,
     "xxtime": xxtime,
     "genderTable": genderTable,
