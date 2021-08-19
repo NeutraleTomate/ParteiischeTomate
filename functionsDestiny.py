@@ -32,7 +32,7 @@ async def wp(message):
         # year = date.strftime("%Y")
         dateToPrint = rDay + "." + month + "."  # + year
         await message.channel.send(raidDay + " " + dateToPrint + " " + raidTime)
-        dates.append(raidDay + " " + dateToPrint + " " + raidTime)
+        dates.append(raidDay + ", " + dateToPrint + " " + raidTime)
     return dates
 
 
@@ -44,6 +44,7 @@ async def wpraids(message):
 
 
 async def wpx(message):
+    await message.channel.send('<@&831103357284384788>')
     await wp(message)
     await message.channel.send("---")
     await wpraids(message)

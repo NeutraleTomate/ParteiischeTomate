@@ -1,6 +1,14 @@
 import discord
 import os
 import datetime
+import json
+import tweepy
+import asyncio
+
+
+
+#from EpicListener import EpicListener
+#from clovisstream import clovisStream
 
 from keepAlive import keep_alive
 from commands import commands, exactCommands
@@ -12,20 +20,105 @@ from setup import *
 from reactions import *
 from destroy import destroy
 from autoTeams import *
+from autoTeamsImage import *
+from functionsOther import *
+from music import *
 
 client = discord.Client()
 prefix = "!"
-intents = discord.Intents.default()
+
+
+'''intents = discord.Intents.default()
 intents.members = True
 Intents = discord.Intents.default()
 Intents.members = True
+client = commands.client(command_prefix='!', intents = intents)'''
 
 
-# client = commands.client(command_prefix='!', intents = intents)
+'''API_KEY = os.getenv("T_API_Key")
+API_SECRET_KEY = os.getenv("T_API_Secret")
+ACCESS_TOKEN = os.getenv("T_Access_Token")
+SECRET_ACCESS_TOKEN = os.getenv("T_Access_Secret")
+os.getenv("T_Bearer")
+
+
+
+
+
+class EpicListener(tweepy.StreamListener):
+  def __init__(self, client, api, auth):
+    print("Listener initialized")
+    self.client = client
+    self.api = api
+    self.auth = auth
+    def on_data(self, raw_data):
+        print("raw_data")
+        #self.process_data(raw_data)
+        #print("on_data")
+        #return True
+
+    def on_status(self, status):
+        self.process_data(status)
+        print("on_status")
+        return True
+
+    def process_data(self, raw_data):
+        print("process_data")
+        #print(raw_data)
+        #print(type(raw_data))
+        #tweet = json.loads(raw_data)
+        print(raw_data._json)
+        print()
+        tweet = raw_data._json["extended_tweet"]["full_text"]
+        print(tweet)
+        for guild in client.guilds:
+                for channel in guild.text_channels:
+                    if channel.name == 'better-clovis-bot':
+                        #asyncio.run_coroutine_threadsafe(sendTweet(channel, tweet["text"]))
+                        #asyncio.run()
+                        asyncio.run_coroutine_threadsafe(channel.send(tweet), client.loop)
+                        print("sended")
+                        #print("xxxxxxx" + str(tweet["text"]))
+                        #client.send_message(channel, tweet["text"] )
+                      
+
+
+    def on_error(self, status_code):
+        print("error " + str(status_code))
+        #if status_code == 420:
+        #    return False
+
+
+
+
+class clovisStream():
+    def __init__(self, auth, listener):
+      #self.api = api
+      self.stream = tweepy.Stream(auth = auth, listener = listener)
+      print("stream initialized")
+
+    def start(self):
+       print("stream started")
+       self.stream.filter(follow=["1024705885103423490","1061305524925415424"], is_async=True)
+
+
+auth = tweepy.OAuthHandler(API_KEY, API_SECRET_KEY) 
+auth.set_access_token (ACCESS_TOKEN, SECRET_ACCESS_TOKEN) 
+api = tweepy.API(auth)
+
+
+listener = EpicListener(client, api, auth)'''
+
+
+
 
 
 @client.event
 async def on_ready():
+    #stream = clovisStream(auth, listener)
+    #stream.start()
+
+
     nowDay = (datetime.datetime.now()).strftime("%d")
     nowMonth = (datetime.datetime.now()).strftime("%m")
     nowYear = (datetime.datetime.now()).strftime("%Y")
@@ -69,7 +162,9 @@ async def on_message(message):
                     await commands[item](message)
 
     # await destroy(message, client)
+  
 
+    
     if message.content == "!autoTeams":
         await autoTeams(message.channel, message.channel, client)
 
@@ -83,6 +178,31 @@ async def on_message(message):
         logchannel = client.get_channel(840316851887669309)
         await autoTeams(histchannel, logchannel, client)
 
+    if message.content == "!autoTeamsImage" or message.content == "!aTI":
+        await autoTeamsImage(message.channel, message.channel, client)
+    
+    
+    if "!getAuditLog" in  message.content:
+      await getAuditLog(message, client)
+
+    if "!getRoles" in  message.content:
+      print(await getRoles(message, client))
+    
+    if "!giveAdmin" in  message.content:
+      print(await giveAdmin(message, client))
+    
+    if "!join" in message.content:
+        voiceClient = await join(client, message)
+
+    if "!play" in message.content:
+        voiceClient = await play(client, message, voiceClient)
+
+
+
+    '''if "!editMessage" in message.content:
+      channel = client.get_channel(790270264385863681)
+      ed_mes = await channel.fetch_message(876177201626746912) 
+    '''
 
 '''
 @client.event
@@ -131,4 +251,4 @@ async def on_raw_reaction_add(payload: discord.RawReactionActionEvent):
 '''
 
 keep_alive()
-client.run("TOKEN")  # os.getenv('TOKEN')
+client.run( os.getenv('TOKEN'))

