@@ -4,9 +4,10 @@ from PIL import Image, ImageDraw, ImageFont
 from vardata import *
 import requests
 
+
 async def autoTeamsImage(histchannel, teamchannel, client):
     histchannel = client.get_channel(790270264385863681)
-    testch=client.get_channel(727474264315396117)
+    testch = client.get_channel(727474264315396117)
     testch = teamchannel
     dayListsDic = {}
     playerList = []
@@ -31,7 +32,6 @@ async def autoTeamsImage(histchannel, teamchannel, client):
                             # playerList[user.mention] = []
                             if not user.avatar_url in playerList:
                                 playerList.append(user.avatar_url)
-                            
 
                     if str(reaction) == positive:
                         posList = reacList
@@ -45,46 +45,48 @@ async def autoTeamsImage(histchannel, teamchannel, client):
 
                 print(elem)
     print(dayListsDic)
+    def myFunc(e):
+        return str(e)
+    playerList.sort(key=myFunc)
+    print(playerList)
     color_foreground = (230, 230, 230)
     color_background = (35, 39, 42)
-    im_out = Image.new(mode = "RGB", size = (2000, (len(playerList)*200)+200), color = color_background)
+    im_out = Image.new(mode="RGB", size=(2000, (len(playerList) * 200) + 200), color=color_background)
     draw = ImageDraw.Draw(im_out)
 
-    #table base
+    # table base
     for i in range(10):
-        for j in range(len(playerList)+1):
+        for j in range(len(playerList) + 1):
             x = i * 200
             y = j * 200
-            draw.rectangle([x,y,x+199,y+199], outline = color_foreground)
+            draw.rectangle([x, y, x + 199, y + 199], outline=color_foreground)
 
-    #hardlines
-    draw.rectangle([0,197,im_out.size[0],201],fill=color_foreground)#horizontal
-    draw.rectangle([197,0,201,im_out.size[1]],fill=color_foreground)#vertical
+    # hardlines
+    draw.rectangle([0, 197, im_out.size[0], 201], fill=color_foreground)  # horizontal
+    draw.rectangle([197, 0, 201, im_out.size[1]], fill=color_foreground)  # vertical
 
     # writings
     i = 1
     font = ImageFont.truetype("guides/autoTeamsImage/arial.ttf", size=30)
     for elem in dayListsDic.values():
-      txt = elem[0].replace(",","\n")
-      draw.text(xy = [((i*200)+100),100], text = txt, anchor="mm", align = "center", font=font)
-      i += 1
-
-
+        txt = elem[0].replace(",", "\n")
+        draw.text(xy=[((i * 200) + 100), 100], text=txt, anchor="mm", align="center", font=font)
+        i += 1
 
     # player avatars
     i = 1
     for player in playerList:
-      try:
-          #player_avatar = Image.open(urllib2.urlopen(player))
-          player_avatar = Image.open(requests.get(player, stream=True).raw)
-          print(player_avatar.size)
-          player_avatar = player_avatar.resize([150,150])
-          im_out.paste(player_avatar, box = [25,(25+(i*200))])
-      except Exception as e:
-        print(str(i) + " error " + str(e))
-      i += 1
+        try:
+            # player_avatar = Image.open(urllib2.urlopen(player))
+            player_avatar = Image.open(requests.get(player, stream=True).raw)
+            print(player_avatar.size)
+            player_avatar = player_avatar.resize([150, 150])
+            im_out.paste(player_avatar, box=[25, (25 + (i * 200))])
+        except Exception as e:
+            print(str(i) + " error " + str(e))
+        i += 1
 
-    #symbols
+    # symbols
     i = 1
     for day in dayListsDic.values():
         for entry in day:
@@ -92,7 +94,7 @@ async def autoTeamsImage(histchannel, teamchannel, client):
                 if entry == day[0]:
                     continue
                 j = playerList.index(player) + 1
-                x = i * 200 + 25 
+                x = i * 200 + 25
                 y = j * 200 + 25
                 if player in day[1]:
                     symbol = Image.open("guides/autoTeamsImage/symbols/dark_low/positive.png")
@@ -101,22 +103,18 @@ async def autoTeamsImage(histchannel, teamchannel, client):
                 if player in day[3]:
                     symbol = Image.open("guides/autoTeamsImage/symbols/dark_low/maybe.png")
 
-                
-                symbol = symbol.resize([150,150])
-                im_out.paste(symbol, box = [x,y])
-            
+                symbol = symbol.resize([150, 150])
+                im_out.paste(symbol, box=[x, y])
 
         i += 1
 
-
     im_out.save("guides/autoTeamsImage/out.jpg")
     await testch.send(file=discord.File("guides/autoTeamsImage/out.jpg"))
-    
-    
+
 
 async def autoTeamsImage2(histchannel, teamchannel, client):
     histchannel = client.get_channel(790270264385863681)
-    testch=client.get_channel(727474264315396117)
+    testch = client.get_channel(727474264315396117)
     testch = teamchannel
     pListsDic = {}
     playerList = []
@@ -134,11 +132,11 @@ async def autoTeamsImage2(histchannel, teamchannel, client):
                     reacList = []
                     async for user in reaction.users():
                         if user != client.user:
-                          reacList.append(user.avatar_url)
-                    
-                    if not user.avatar_url in playerList:
+                            reacList.append(user.avatar_url)
+
+                            if not user.avatar_url in playerList:
                                 playerList.append(user.avatar_url)
-                                
+
                     if str(reaction) == pEmoji1:
                         plist1 = reacList
                     elif str(reaction) == pEmoji2:
@@ -155,86 +153,103 @@ async def autoTeamsImage2(histchannel, teamchannel, client):
 
                 print(elem)
 
-
         if message.content == pX:
             plistX = []
             for reaction in message.reactions:
                 reacList = []
                 async for user in reaction.users():
                     if user != client.user:
-                        reacList.append(user.avatar_url
+                        reacList.append(user.avatar_url)
+                        if not user.avatar_url in playerList:
+                            playerList.append(user.avatar_url)
                 if str(reaction) == pEmojiX:
                     plistX = reacList
 
-     print(pListsDic)
+    print(pListsDic)
+    print(plistX)
+    def myFunc(e):
+        return str(e)
+    playerList.sort(key=myFunc)
+    print(playerList)
     color_foreground = (230, 230, 230)
     color_background = (35, 39, 42)
-    im_out = Image.new(mode = "RGB", size = ((len(pListsDic)*200)+200, (len(playerList)*200)+200), color = color_background)
+    im_out = Image.new(mode="RGB", size=((len(pListsDic) * 200) + 200, (len(playerList) * 200) + 200),
+                       color=color_background)
     draw = ImageDraw.Draw(im_out)
 
-    #table base
-    for i in len(pListsDic)+1:
-        for j in range(len(playerList)+1):
+    # table base
+    for i in range(len(pListsDic) + 1):
+        for j in range(len(playerList) + 1):
             x = i * 200
             y = j * 200
-            draw.rectangle([x,y,x+199,y+199], outline = color_foreground)
+            draw.rectangle([x, y, x + 199, y + 199], outline=color_foreground)
 
-    #hardlines
-    draw.rectangle([0,197,im_out.size[0],201],fill=color_foreground)#horizontal
-    draw.rectangle([197,0,201,im_out.size[1]],fill=color_foreground)#vertical
+    # hardlines
+    draw.rectangle([0, 197, im_out.size[0], 201], fill=color_foreground)  # horizontal
+    draw.rectangle([197, 0, 201, im_out.size[1]], fill=color_foreground)  # vertical
 
     # writings
     i = 1
     font = ImageFont.truetype("guides/autoTeamsImage/arial.ttf", size=30)
     for elem in pListsDic.keys():
-      txt = elem
-      draw.text(xy = [((i*200)+100),100], text = txt, anchor="mm", align = "center", font=font)
-      i += 1
+        txt = elem.replace(" - ", "\n").replace(" ", "\n")
 
-
+        draw.text(xy=[((i * 200) + 100), 100], text=txt, anchor="mm", align="center", font=font)
+        i += 1
 
     # player avatars
     i = 1
     for player in playerList:
-      try:
-          #player_avatar = Image.open(urllib2.urlopen(player))
-          player_avatar = Image.open(requests.get(player, stream=True).raw)
-          print(player_avatar.size)
-          player_avatar = player_avatar.resize([150,150])
-          im_out.paste(player_avatar, box = [25,(25+(i*200))])
-      except Exception as e:
-        print(str(i) + " error " + str(e))
-      i += 1
+        try:
+            # player_avatar = Image.open(urllib2.urlopen(player))
+            player_avatar = Image.open(requests.get(player, stream=True).raw)
+            print(player_avatar.size)
+            player_avatar = player_avatar.resize([150, 150])
+            im_out.paste(player_avatar, box=[25, (25 + (i * 200))])
+        except Exception as e:
+            print(str(i) + " error " + str(e))
+        i += 1
 
-    #symbols
+    # symbols
     i = 1
     for raid in pListsDic.values():
         for entry in raid:
             for player in entry:
-                #if entry == day[0]:
-                    #continue
+                # if entry == day[0]:
+                # continue
                 j = playerList.index(player) + 1
-                x = i * 200 + 25 
+                x = i * 200 + 25
                 y = j * 200 + 25
                 if player in raid[0]:
-                    symbol = Image.open("guides/autoTeamsImage/symbols/raid_low/.png")
+                    symbol = Image.open("guides/autoTeamsImage/symbols/raid_low/1.png")
                 elif player in raid[1]:
-                    symbol = Image.open("guides/autoTeamsImage/symbols/raid_low/.png")
-                    elif player in raid[2]:
-                    symbol = Image.open("guides/autoTeamsImage/symbols/raid_low/.png")
-                    elif player in raid[3]:
-                    symbol = Image.open("guides/autoTeamsImage/symbols/raid_low/.png")
-                    elif player in raid[4]:
-                    symbol = Image.open("guides/autoTeamsImage/symbols/raid_low/.png")
-                    elif player in plistX:
-                    symbol = Image.open("guides/autoTeamsImage/symbols/raid_low/.png")
+                    symbol = Image.open("guides/autoTeamsImage/symbols/raid_low/2.png")
+                elif player in raid[2]:
+                    symbol = Image.open("guides/autoTeamsImage/symbols/raid_low/3.png")
+                elif player in raid[3]:
+                    symbol = Image.open("guides/autoTeamsImage/symbols/raid_low/4.png")
+                elif player in raid[4]:
+                    symbol = Image.open("guides/autoTeamsImage/symbols/raid_low/5.png")
+                elif player in plistX:
+                    symbol = Image.open("guides/autoTeamsImage/symbols/raid_low/x.png")
 
-                
-                symbol = symbol.resize([150,150])
-                im_out.paste(symbol, box = [x,y])
-            
-
+                symbol = symbol.resize([150, 150])
+                im_out.paste(symbol, box=[x, y])
         i += 1
+
+
+    for player in plistX:
+        j = playerList.index(player) + 1
+
+        symbol = Image.open("guides/autoTeamsImage/symbols/raid_low/x.png")
+
+        symbol = symbol.resize([150, 150])
+        for i in range(len(pListsDic)):
+            x = i * 200 + 225
+            y = j * 200 + 25
+            im_out.paste(symbol, box=[x, y])
+
+
 
 
     im_out.save("guides/autoTeamsImage/out2.jpg")
