@@ -180,6 +180,8 @@ async def on_message(message):
 
     if message.content == "!autoTeamsImage" or message.content == "!aTI":
         await autoTeamsImage(message.channel, message.channel, client)
+    if message.content == "!autoTeamsImage2" or message.content == "!aTI2":
+        await autoTeamsImage2(message.channel, message.channel, client)
     
     
     if "!getAuditLog" in  message.content:
