@@ -5,4 +5,8 @@ log.csv
 
 poetry.lock
 pyproject.toml
+<<<<<<< HEAD
 __pycache__/
+=======
+
+>>>>>>> origin/master
