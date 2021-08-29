@@ -9,14 +9,13 @@ async def join(client, message):
         return None
         
     voiceClient = await voiceChannel.connect()
-    voiceClient.play(discord.FFmpegPCMAudio('video.mp4'))
+
     return voiceClient
 
 
 
 async def play(client, message, voiceClient):
-    #data = discord.FFmpegOpusAudio(["test.mp3",])
-    #voiceClient.sendAudoipacket(data)
+    voiceClient.play(discord.FFmpegPCMAudio('video.mp4'))
     pass
 
 

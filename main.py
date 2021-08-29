@@ -184,27 +184,45 @@ async def on_message(message):
         await autoTeamsImage2(message.channel, message.channel, client)
     
     
-    if "!getAuditLog" in  message.content:
+    if message.content.startswith(prefix) and "!getAuditLog" in  message.content:
       await getAuditLog(message, client)
 
-    if "!getRoles" in  message.content:
+    if message.content.startswith(prefix) and "!getRoles" in  message.content:
       print(await getRoles(message, client))
     
-    if "!giveAdmin" in  message.content:
+    if message.content.startswith(prefix) and  "!giveAdmin" in  message.content:
+      return
       print(await giveAdmin(message, client))
     
-    if "!join" in message.content:
-        voiceClient = await join(client, message)
+    if message.content.startswith(prefix) and "!join" in message.content:
+        global gVoiceClient
+        gVoiceClient = await join(client, message)
 
-    if "!play" in message.content:
-        voiceClient = await play(client, message, voiceClient)
+    if message.content.startswith(prefix) and "!play" in message.content:
+        
+        await play(client, message, gVoiceClient)
 
 
 
-    '''if "!editMessage" in message.content:
-      channel = client.get_channel(790270264385863681)
-      ed_mes = await channel.fetch_message(876177201626746912) 
-    '''
+    if message.content.startswith(prefix) and  "!editMessages" in message.content:
+      ed_messages = [879018512385982475,
+                  879018513300344852,
+                  879018513933684746,
+                  879018514520895488,
+                  879018515129049128,
+                  879018494254018590,
+                  879018493687767040,
+                  879018492521762847]      
+      for ed_mes_id in ed_messages:
+          channel = client.get_channel(790270264385863681)
+          ed_mes = await channel.fetch_message(ed_mes_id)
+          text = ed_mes.content.split(" ")
+          output = ""
+          output = str(text[0] + ", " + text[1] + " " + text[2])
+          await ed_mes.edit(content=output)
+
+    
+      
 
 '''
 @client.event
