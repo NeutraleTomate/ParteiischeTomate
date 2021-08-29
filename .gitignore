@@ -5,3 +5,4 @@ log.csv
 
 poetry.lock
 pyproject.toml
+__pycache__/
