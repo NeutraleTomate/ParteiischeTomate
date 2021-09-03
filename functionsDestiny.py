@@ -12,9 +12,9 @@ async def wp(message):
     await message.delete()
 
     addent = int((datetime.datetime.now()).strftime("%w"))
-    addent += -2
+    addent -= 2
     if addent >= 3:
-        addent += -7
+        addent -= 7
 
     date = datetime.datetime.now() - timedelta(days=addent)
     dates = []
@@ -31,7 +31,7 @@ async def wp(message):
         month = date.strftime("%m")
         # year = date.strftime("%Y")
         dateToPrint = rDay + "." + month + "."  # + year
-        await message.channel.send(raidDay + " " + dateToPrint + " " + raidTime)
+        await message.channel.send(raidDay + ", " + dateToPrint + " " + raidTime)
         dates.append(raidDay + ", " + dateToPrint + " " + raidTime)
     return dates
 
@@ -63,17 +63,17 @@ async def pit(message):
 
 async def vog(message):
     try:
-        number = message.content.split("!dsc ")[1]
+        number = message.content.split("!vog ")[1]
     except:
-        await vaildNum(message, "!dsc")
+        await vaildNum(message, "!vog")
         return
     if number == "1" or number == "3":
-        await message.channel.send("DSC " + number + ". Encounter map: ")
-        await message.channel.send(file=discord.File("guides/Raids/DSC/crypta_map_0" + number + ".png"))
+        await message.channel.send("VoG " + number + ". Encounter map: ")
+        await message.channel.send(file=discord.File("guides/Raids/VOG/" + number + ".png"))
         await message.delete()
     elif number == "loot" or number == "Loot":
         await message.channel.send("VoG Loot Table:")
-        await message.channel.send(file=discord.File("guides/Raids/VoG/dsc_loottable.png"))
+        await message.channel.send(file=discord.File("guides/Raids/VOG/loot.png"))
         await message.delete()
     else:
         await vaildNum(message, "!vog")
@@ -86,11 +86,11 @@ async def dsc(message):
         return
     if number == "1" or number == "3":
         await message.channel.send("DSC " + number + ". Encounter map: ")
-        await message.channel.send(file=discord.File("guides/Raids/DSC/crypta_map_0" + number + ".png"))
+        await message.channel.send(file=discord.File("guides/Raids/DSC/" + number + ".png"))
         await message.delete()
     elif number == "loot" or number == "Loot":
         await message.channel.send("DSC Loot Table:")
-        await message.channel.send(file=discord.File("guides/Raids/DSC/dsc_loottable.png"))
+        await message.channel.send(file=discord.File("guides/Raids/DSC/loot.png"))
         await message.delete()
     else:
         await vaildNum(message, "!dsc")
@@ -104,11 +104,11 @@ async def gos(message):
         return
     if number == "2" or number == "3":
         await message.channel.send("GoS " + number + ". Encounter: ")
-        await message.channel.send(file=discord.File("guides/Raids/GOS/gos_" + number + ".png"))
+        await message.channel.send(file=discord.File("guides/Raids/GOS/" + number + ".png"))
         await message.delete()
     elif number == "loot" or number == "Loot":
         await message.channel.send("GoS Loot Table:")
-        await message.channel.send(file=discord.File("guides/Raids/GOS/gos_loottable.png"))
+        await message.channel.send(file=discord.File("guides/Raids/GOS/loot.png"))
         await message.delete()
     else:
         await vaildNum(message, "!gos")

@@ -4,7 +4,7 @@ from vardata import *
 async def addReactions(message):
     for day in raidCombList:
 
-        if (message.content.split(" "))[0] == day.split(";")[0]:
+        if (message.content.split(", "))[0] == day.split(";")[0]:
             # await message.add_reaction(discord.utils.get(client.emojis, name=customEmoji1))
             await message.add_reaction(positive)
             await message.add_reaction(negative)

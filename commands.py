@@ -1,6 +1,7 @@
 from functionsUtility import *
 from functionsMemes import *
 from functionsDestiny import *
+from music import *
 #from functionsOther import*
 
 commands = {
@@ -16,6 +17,8 @@ commands = {
     "xxtime": xxtime,
     "genderTable": genderTable,
     "write": write,
+
+
 
     # Destiny commands
     # Guides
@@ -37,4 +40,15 @@ exactCommands = {
     "wp": wp,
     "wpx": wpx,
 
+}
+
+musicCommands = {
+    "join" : join,
+    "play" : play,
+    #"p" : play,
+    "queue": queue,
+    #"q" : queue,
+    "leave" : leave,
+    "pause" : pause,
+    "clear" : clear,
 }

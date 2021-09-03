@@ -137,6 +137,8 @@ async def autoTeams(histchannel, teamchannel, client):
                 for player in plistX:
                     if player in day[1]:
                         player = str(player)
+                        if player == '<@697121563392081981>' and raidNameX != 'Deep Stone Crypt':
+                          continue
                         if (raidNameX not in playerList[player]) and (day[0] not in playerList[player]):
                             raidTeam.append(player)
 
@@ -153,6 +155,8 @@ async def autoTeams(histchannel, teamchannel, client):
                         print((raidNameX not in playerList[player]))
                         # print(raidNameX)
                         # print(playerList[player])
+                        if player == '<@697121563392081981>' and raidNameX != 'Deep Stone Crypt':
+                          continue
                         if (raidNameX not in playerList[player]) and (day[0] not in playerList[player]):
                             raidTeam.append(player)
 
